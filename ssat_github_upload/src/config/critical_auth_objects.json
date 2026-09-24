@@ -1,0 +1,12 @@
+[
+  {"object": "S_DEVELOP", "description": "ABAP development (SE38/SE80/SE11) - can create/change custom code"},
+  {"object": "S_TABU_DIS", "description": "Generic table maintenance (SM30/SM31) via authorization group"},
+  {"object": "S_TABU_NAM", "description": "Generic table maintenance restricted by explicit table name"},
+  {"object": "S_USER_GRP", "description": "User master maintenance scoped by user group"},
+  {"object": "S_USER_PRO", "description": "Assign profiles to users"},
+  {"object": "S_USER_AUT", "description": "Assign authorizations/roles to users"},
+  {"object": "S_RFC", "description": "RFC function group access"},
+  {"object": "S_ADMI_FCD", "description": "System administration functions (client admin, spool, etc.)"},
+  {"object": "S_DATASET", "description": "OS-level file access from ABAP (upload/download, directories)"},
+  {"object": "S_C_FUNCT", "description": "External CPI-C / RFC callback control"}
+]

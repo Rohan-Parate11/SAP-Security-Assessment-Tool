@@ -1,0 +1,19 @@
+[
+  {"service_path": "/sap/bc/soap/rfc", "leaf_name": "rfc", "reason": "SOAP-to-RFC gateway; unauthenticated RFC invocation risk", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/echo", "leaf_name": "echo", "reason": "Test/diagnostic echo service, no business function", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/error", "leaf_name": "error", "reason": "Test error page, information disclosure risk", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/FormToRfc", "leaf_name": "FormToRfc", "reason": "Unauthenticated web-form-to-RFC bridge", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/report", "leaf_name": "report", "reason": "Generic ABAP report execution over HTTP", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/webrfc", "leaf_name": "webrfc", "reason": "Legacy web-to-RFC bridge, deprecated and risky", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/xrfc", "leaf_name": "xrfc", "reason": "XML-RFC bridge, legacy/unauthenticated risk", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/xrfc_test", "leaf_name": "xrfc_test", "reason": "Test service for XML-RFC bridge", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/bsp/sap/bsp_veri", "leaf_name": "bsp_veri", "reason": "BSP verification test application", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/bsp/sap/certmap", "leaf_name": "certmap", "reason": "Certificate mapping admin UI, should not be broadly exposed", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/gui/sap/its/CERTMAP", "leaf_name": "CERTMAP", "reason": "ITS variant of certificate mapping admin UI", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/bsp/sap/certreq", "leaf_name": "certreq", "reason": "Certificate request UI, should not be broadly exposed", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/gui/sap/its/CERTREQ", "leaf_name": "CERTREQ", "reason": "ITS variant of certificate request UI", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/bsp/sap/icf", "leaf_name": "icf", "reason": "ICF administration BSP application", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/srt/IDoc", "leaf_name": "IDoc", "reason": "IDoc-over-HTTP service, review if IDoc/XML not in use", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/bc/idoc_xml", "leaf_name": "idoc_xml", "reason": "IDoc XML service, review if IDoc/XML not in use", "source": "SAP Security Baseline Template"},
+  {"service_path": "/sap/public/info", "leaf_name": "info", "reason": "Discloses SAP release/OS/DB/install path/IP to unauthenticated callers", "source": "Documented SAP vulnerability (Onapsis/Acunetix/Invicti advisories)"}
+]

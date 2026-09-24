@@ -1,0 +1,21 @@
+[
+  {"parameter": "login/min_password_lng", "recommended": "8", "comparison": "gte", "description": "Minimum password length"},
+  {"parameter": "login/min_password_digits", "recommended": "1", "comparison": "gte", "description": "Minimum digits required in password"},
+  {"parameter": "login/min_password_letters", "recommended": "1", "comparison": "gte", "description": "Minimum letters required in password"},
+  {"parameter": "login/min_password_specials", "recommended": "1", "comparison": "gte", "description": "Minimum special characters required in password"},
+  {"parameter": "login/fails_to_user_lock", "recommended": "5", "comparison": "lte", "description": "Failed logon attempts before account lock"},
+  {"parameter": "login/password_expiration_time", "recommended": "90", "comparison": "lte", "description": "Password validity period (days)"},
+  {"parameter": "login/password_history_size", "recommended": "5", "comparison": "gte", "description": "Number of previous passwords remembered"},
+  {"parameter": "login/password_max_idle_initial", "recommended": "14", "comparison": "lte", "description": "Days an initial password may remain unused"},
+  {"parameter": "login/password_max_idle_productive", "recommended": "90", "comparison": "lte", "description": "Days a productive password may remain unused"},
+  {"parameter": "login/no_automatic_user_sapstar", "recommended": "1", "comparison": "eq", "description": "Disable SAP*'s hardcoded default password fallback"},
+  {"parameter": "login/password_compliance_to_current_policy", "recommended": "1", "comparison": "eq", "description": "Re-validate existing passwords against the current password policy"},
+  {"parameter": "auth/no_check_in_some_cases", "recommended": "Y", "comparison": "eq", "description": "Use SU24 authorization proposals (modern authority check framework)"},
+  {"parameter": "auth/rfc_authority_check", "recommended": "1", "comparison": "gte", "description": "Enforce authorization checks for RFC-called function modules"},
+  {"parameter": "auth/object_disabling_active", "recommended": "N", "comparison": "eq", "description": "Authorization object checks should not be disabled (SU24/AUTH_SWITCH_OBJECTS)"},
+  {"parameter": "rfc/reject_expired_passwd", "recommended": "1", "comparison": "eq", "description": "Reject RFC logon with an expired password instead of prompting to change it"},
+  {"parameter": "gw/acl_mode", "recommended": "1", "comparison": "eq", "description": "Gateway ACL (secinfo/reginfo) enforcement mode"},
+  {"parameter": "icf/set_HTTPSECURITY", "recommended": "1", "comparison": "gte", "description": "ICF HTTP security header hardening level"},
+  {"parameter": "login/ticket_only_by_https", "recommended": "1", "comparison": "eq", "description": "SSO logon tickets only transmitted over HTTPS"},
+  {"parameter": "rdisp/gui_auto_logout", "recommended": "1800", "comparison": "lte", "description": "Automatic GUI session logout after inactivity (seconds)"}
+]

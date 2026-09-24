@@ -1,0 +1,18 @@
+# openpyxl and requests install normally:
+#   .venv\Scripts\python.exe -m pip install -r requirements.txt
+openpyxl>=3.1
+requests>=2.31
+flask>=3.1
+anthropic>=0.69
+google-genai>=1.0
+groq>=0.11
+jsonschema>=4.23
+playwright>=1.47
+pytest>=8.3
+truststore>=0.9
+
+# pyrfc is NOT installable via this file / plain `pip install pyrfc` -- every
+# release on PyPI is yanked or python-incompatible. Install it from a
+# prebuilt wheel on SAP's GitHub releases instead (matched to your venv's
+# Python version -- this project uses cp311-win_amd64). See SDK_SETUP.md.
+#   pip install "https://github.com/SAP-archive/PyRFC/releases/download/v3.3.1/pyrfc-3.3.1-cp311-cp311-win_amd64.whl"

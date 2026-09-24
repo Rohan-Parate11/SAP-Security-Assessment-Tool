@@ -1,0 +1,36 @@
+{
+  "_comment": "Copy this file to connection.json (kept out of version control) and fill in your values. Never commit a real password: leave 'passwd' blank and set the SAP_RFC_PASSWD environment variable instead.",
+
+  "system_id": "DEV",
+  "ashost": "sapdev.example.local",
+  "sysnr": "00",
+  "client": "100",
+  "user": "RFC_SEC_ASSESS",
+  "passwd": "",
+  "lang": "EN",
+
+  "odata": {
+    "_comment": "Only needed for FIO-007 (OData services reviewed). Gateway host may differ from ashost above.",
+    "base_url": "https://sapdev.example.local:44300",
+    "client": "100",
+    "user": "RFC_SEC_ASSESS",
+    "passwd": "",
+    "verify_ssl": true
+  },
+
+  "usr_004": {
+    "dormant_days": 90
+  },
+
+  "rol_006": {
+    "critical_objects_file": null
+  },
+
+  "sys_001": {
+    "baseline_file": null
+  },
+
+  "fio_006": {
+    "required_services": []
+  }
+}

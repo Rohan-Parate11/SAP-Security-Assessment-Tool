@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SAP Security Assessment Report - {{ system_id }}</title>
+<style>
+  :root {
+    --text: #1a1d21; --muted: #5b6168; --border: #d8dde2; --band: #f4f6f8;
+    --accent: #0a6ed1; --crit: #b00000; --crit-bg: #fdecec;
+    --warn: #92670a; --warn-bg: #fdf3de; --good: #107e3e; --good-bg: #e8f6ee;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color: var(--text); font-size: 11pt; line-height: 1.5; margin: 0; }
+  h1 { font-size: 26pt; margin: 0 0 8px; }
+  h2 { font-size: 16pt; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 6px; margin: 0 0 14px; }
+  h3 { font-size: 12.5pt; margin: 18px 0 8px; }
+  h4 { font-size: 11pt; margin: 14px 0 4px; }
+  p { margin: 0 0 10px; }
+  .section { page-break-before: always; }
+  .section:first-of-type { page-break-before: avoid; }
+
+  /* -- cover page -- */
+  .cover { height: 240mm; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+  .cover-brand { font-size: 13pt; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 40px; }
+  .cover h1 { font-size: 28pt; }
+  .cover-subtitle { font-size: 13pt; color: var(--muted); margin-bottom: 40px; }
+  .cover-meta { font-size: 11pt; color: var(--muted); }
+  .cover-meta div { margin-bottom: 4px; }
+  .confidential { margin-top: 60px; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+  /* -- posture stat row -- */
+  .stat-row { display: flex; gap: 14px; margin-bottom: 20px; }
+  .stat { flex: 1; border-radius: 6px; padding: 14px 16px; text-align: center; }
+  .stat .n { font-size: 22pt; font-weight: 700; display: block; }
+  .stat .l { font-size: 9.5pt; color: var(--muted); }
+  .stat.crit { background: var(--crit-bg); } .stat.crit .n { color: var(--crit); }
+  .stat.warn { background: var(--warn-bg); } .stat.warn .n { color: var(--warn); }
+  .stat.good { background: var(--good-bg); } .stat.good .n { color: var(--good); }
+
+  /* -- tables -- */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 9.5pt; }
+  th { text-align: left; background: var(--band); padding: 6px 8px; border-bottom: 1px solid var(--border); font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
+  td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr.crit td:first-child, td.crit { color: var(--crit); font-weight: 700; }
+  tr.warn td:first-child, td.warn { color: var(--warn); font-weight: 700; }
+  td.good { color: var(--good); font-weight: 700; }
+  .note { font-size: 9pt; color: var(--muted); font-style: italic; }
+
+  /* -- remediation -- */
+  .remediation-item { border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin-bottom: 10px; break-inside: avoid; }
+  tr { break-inside: avoid; }
+  .remediation-item h4 { margin-top: 0; }
+  .remediation-item ul { margin: 6px 0 0; padding-left: 18px; font-size: 9.5pt; color: var(--muted); }
+  .priority-immediate h3 { color: var(--crit); }
+  .priority-near-term h3 { color: var(--warn); }
+
+  /* -- disclaimer / footer -- */
+  .disclaimer { background: var(--band); border-left: 3px solid var(--accent); padding: 10px 14px; font-size: 9.5pt; }
+  .report-footer { font-size: 8.5pt; color: var(--muted); text-align: center; margin-top: 24px; }
+</style>
+</head>
+<body>
+
+  <section class="cover section">
+    <div class="cover-brand">BRISTLECONE</div>
+    <h1>SAP Security Assessment Report</h1>
+    <p class="cover-subtitle">System {{ system_id }}</p>
+    <div class="cover-meta">
+      <div>Assessment run: {{ run_at }}</div>
+      <div>Report generated: {{ generated_at }}</div>
+    </div>
+    <p class="confidential">Confidential -- prepared for internal client review</p>
+  </section>
+
+  <section class="section">
+    <h2>Executive Summary</h2>
+    {% for para in executive_summary.split('\n') %}{% if para.strip() %}<p>{{ para.strip() }}</p>{% endif %}{% endfor %}
+  </section>
+
+  <section class="section">
+    <h2>Assessment Scope &amp; Methodology</h2>
+    <p>
+      This assessment ran {{ totals.checks }} automated, read-only checks against system {{ system_id }}, covering the
+      following domains: {{ domains|join(', ') }}.
+    </p>
+    <p>
+      All checks were performed via non-invasive RFC/OData calls -- no configuration changes were made to the assessed
+      system as part of this engagement. Findings reflect the state of the system at the time of the assessment run
+      ({{ run_at }}) and should be re-validated if significant time has passed since.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Risk Summary</h2>
+    <div class="stat-row">
+      <div class="stat crit"><span class="n">{{ totals.critical }}</span><span class="l">Critical</span></div>
+      <div class="stat warn"><span class="n">{{ totals.warning }}</span><span class="l">Warning</span></div>
+      <div class="stat good"><span class="n">{{ totals.clean }}</span><span class="l">Clean</span></div>
+    </div>
+
+    <h3>Risk Heat Map by Domain</h3>
+    <table>
+      <tr><th>Domain</th><th>Critical</th><th>Warning</th><th>Clean</th></tr>
+      {% for row in heat_map %}
+      <tr>
+        <td>{{ row.domain }}</td>
+        <td class="{{ 'crit' if row.critical else '' }}">{{ row.critical }}</td>
+        <td class="{{ 'warn' if row.warning else '' }}">{{ row.warning }}</td>
+        <td class="good">{{ row.clean }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <p class="note">
+      This heat map is a derived summary of each domain's checks bucketed by severity -- it is not a formal SAP
+      security maturity assessment.
+    </p>
+
+    <h3>Top Risk Indicators</h3>
+    <table>
+      <tr><th>Finding</th><th>Value</th></tr>
+      {% for tile in kpi_tiles %}
+      <tr class="{{ tile.cls }}"><td>{{ tile.label }}</td><td>{{ tile.value }}</td></tr>
+      {% endfor %}
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Detailed Findings</h2>
+    {% for domain in domains %}
+    <h3>{{ loop.index }}. {{ domain }}</h3>
+    <table>
+      <tr><th>Question</th><th>Key Finding</th><th>Records</th></tr>
+      {% for check in checks_by_domain[domain] %}
+      <tr><td>{{ check.question }}</td><td>{{ check.key_finding }}</td><td>{{ check.record_count }}</td></tr>
+      {% endfor %}
+    </table>
+    {% endfor %}
+  </section>
+
+  <section class="section">
+    <h2>Remediation Roadmap</h2>
+    <div class="priority-immediate">
+      <h3>Immediate Priority</h3>
+      {% if not roadmap.immediate %}<p class="note">No critical-priority items from this run.</p>{% endif %}
+      {% for item in roadmap.immediate %}
+      <div class="remediation-item">
+        <h4>{{ item.label }}</h4>
+        <p>{{ item.recommendation }}</p>
+        <ul>{% for step in item.steps %}<li>{{ step }}</li>{% endfor %}</ul>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="priority-near-term">
+      <h3>Near-Term Priority</h3>
+      {% if not roadmap.near_term %}<p class="note">No near-term items from this run.</p>{% endif %}
+      {% for item in roadmap.near_term %}
+      <div class="remediation-item">
+        <h4>{{ item.label }}</h4>
+        <p>{{ item.recommendation }}</p>
+        <ul>{% for step in item.steps %}<li>{{ step }}</li>{% endfor %}</ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Appendix</h2>
+    <p class="disclaimer">
+      <strong>AI-assisted draft.</strong> The executive summary and remediation guidance in this report were generated
+      by AI ({{ ai_provider }}) from this assessment's structured, aggregate results. Review for accuracy and business
+      context before delivering to a client -- this is a draft aid for the consulting team, not a final, unreviewed
+      client deliverable.
+    </p>
+    <p class="report-footer">© 2026 Bristlecone. Confidential -- generated {{ generated_at }} by the SAP Security Assessment Tool.</p>
+  </section>
+
+</body>
+</html>
